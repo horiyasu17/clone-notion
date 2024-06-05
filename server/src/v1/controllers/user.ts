@@ -15,7 +15,6 @@ const userController = () => {
         process.env.SECRET_KEY,
       ).toString();
 
-      console.log(req.body.password);
       // Register user
       const user = await UserModel.create(req.body);
       // Create JWT
