@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import { User } from "../models/user";
+import { UserModel } from "../models/userModel";
 import validateError from "../handlers/validation";
 import userController from "../controllers/user";
 
@@ -20,7 +20,7 @@ router.post(
     .isLength({ min: 8 })
     .withMessage("確認用パスワードは8文字以上である必要です"),
   body("email").custom((value: string) => {
-    return User.findOne({ email: value }).then((email) => {
+    return UserModel.findOne({ email: value }).then((email) => {
       if (email) {
         return Promise.reject("このEmailはすでに使われています");
       }

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AES, enc } from "crypto-js";
-import { User, UserDoc } from "../models/user";
+import { UserModel, UserDoc } from "../models/userModel";
 import jwt from "jsonwebtoken";
 
 const userController = () => {
@@ -17,7 +17,7 @@ const userController = () => {
 
       console.log(req.body.password);
       // Register user
-      const user = await User.create(req.body);
+      const user = await UserModel.create(req.body);
       // Create JWT
       const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
         expiresIn: "24h",
@@ -35,7 +35,7 @@ const userController = () => {
 
     try {
       // check user
-      const user = await User.findOne({ email });
+      const user = await UserModel.findOne({ email });
       if (!user)
         return res.status(401).json({
           errors: { param: "email", message: "Emailが無効です" },
