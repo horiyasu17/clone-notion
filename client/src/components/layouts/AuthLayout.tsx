@@ -1,5 +1,6 @@
 import { Box, Container } from "@mui/material";
 import notionLogo from "src/assets/images/notion-logo.png";
+import { Outlet } from "react-router-dom";
 
 export const AuthLayout = () => {
   return (
@@ -19,6 +20,7 @@ export const AuthLayout = () => {
         />
         Notion Clone
       </Box>
+      <Outlet />
     </Container>
   );
 };
