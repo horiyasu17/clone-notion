@@ -11,7 +11,7 @@ const userCtrl = userController();
 router.post(
   "/register",
   body("email").isEmail().withMessage("無効なEmailです"),
-  body("username")
+  body("userName")
     .isLength({ min: 8 })
     .withMessage("ユーザー名は8文字以上である必要です"),
   body("password")

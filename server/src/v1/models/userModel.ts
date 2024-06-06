@@ -1,8 +1,8 @@
 import mongoose, { Document } from "mongoose";
 
 export interface UserDoc extends Document {
-  name: string;
   email: string;
+  userName: string;
   password: string;
 }
 
@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    username: {
+    userName: {
       type: String,
       required: true,
     },
