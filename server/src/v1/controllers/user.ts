@@ -31,23 +31,29 @@ const userController = () => {
   // Login
   const login = async (req: Request<UserDoc>, res: Response) => {
     const { email, password } = req.body;
+    let isError = false;
 
     try {
       // check user
       const user = await UserModel.findOne({ email });
-      if (!user)
-        return res.status(401).json({
-          errors: { param: "email", message: "Emailが無効です" },
-        });
+      if (!user) isError = true;
 
       // Verify password
-      const decryptedPassword = AES.decrypt(
-        user.password,
-        process.env.SECRET_KEY,
-      ).toString(enc.Utf8);
-      if (decryptedPassword !== password)
+      if (user) {
+        const decryptedPassword = AES.decrypt(
+          user?.password,
+          process.env.SECRET_KEY,
+        ).toString(enc.Utf8);
+        if (decryptedPassword !== password) isError = true;
+      }
+
+      // Response error
+      if (isError)
         return res.status(401).json({
-          errors: { param: "password", message: "パスワードが無効です" },
+          errors: [
+            { path: "email", msg: "Emailかパスワードが無効です" },
+            { path: "password", msg: "Emailかパスワードが無効です" },
+          ],
         });
 
       // Create JWT
@@ -57,6 +63,7 @@ const userController = () => {
 
       return res.status(200).json({ user, token });
     } catch (error) {
+      console.log("error");
       return res.status(500).json(error);
     }
   };
