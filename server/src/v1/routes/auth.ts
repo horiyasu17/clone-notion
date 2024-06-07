@@ -8,15 +8,12 @@ import verifyToken from "../handlers/token";
 const router = express.Router();
 const userCtrl = userController();
 
+// Register user
 router.post(
   "/register",
   body("email").isEmail().withMessage("無効なEmailです"),
-  body("userName")
-    .isLength({ min: 8 })
-    .withMessage("ユーザー名は8文字以上である必要です"),
-  body("password")
-    .isLength({ min: 8 })
-    .withMessage("パスワードは8文字以上である必要です"),
+  body("userName").isLength({ min: 8 }).withMessage("ユーザー名は8文字以上である必要です"),
+  body("password").isLength({ min: 8 }).withMessage("パスワードは8文字以上である必要です"),
   body("confirmPassword")
     .isLength({ min: 8 })
     .withMessage("確認用パスワードは8文字以上である必要です"),
@@ -31,18 +28,16 @@ router.post(
   userCtrl.register,
 );
 
+// Login user
 router.post(
   "/login",
   body("email").isEmail().withMessage("無効なEmailです"),
-  body("password")
-    .isLength({ min: 8 })
-    .withMessage("パスワードは8文字以上である必要です"),
+  body("password").isLength({ min: 8 }).withMessage("パスワードは8文字以上である必要です"),
   validateError,
   userCtrl.login,
 );
 
-router.post("/verify-token", verifyToken, async (_: Request, res: Response) => {
-  return res.status(200).json({ user: res.locals.user });
-});
+// Verify token
+router.post("/verify-token", verifyToken, userCtrl.verifyToken);
 
 export default router;

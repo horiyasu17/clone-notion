@@ -10,10 +10,7 @@ const userController = () => {
 
     try {
       // Encrypt Password
-      req.body.password = AES.encrypt(
-        password,
-        process.env.SECRET_KEY,
-      ).toString();
+      req.body.password = AES.encrypt(password, process.env.SECRET_KEY).toString();
 
       // Register user
       const user = await UserModel.create(req.body);
@@ -40,10 +37,9 @@ const userController = () => {
 
       // Verify password
       if (user) {
-        const decryptedPassword = AES.decrypt(
-          user?.password,
-          process.env.SECRET_KEY,
-        ).toString(enc.Utf8);
+        const decryptedPassword = AES.decrypt(user?.password, process.env.SECRET_KEY).toString(
+          enc.Utf8,
+        );
         if (decryptedPassword !== password) isError = true;
       }
 
@@ -68,7 +64,12 @@ const userController = () => {
     }
   };
 
-  return { register, login };
+  // Verify token
+  const verifyToken = async (_: Request, res: Response) => {
+    return res.status(200).json({ user: res.locals.user });
+  };
+
+  return { register, login, verifyToken };
 };
 
 export default userController;
