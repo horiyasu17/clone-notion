@@ -1,42 +1,22 @@
-import { FormEvent } from "react";
 import { Box, Button, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Link } from "react-router-dom";
-import AuthApi, { RegisterUserType } from "src/api/AuthApi";
+import useFormActions from "src/hooks/useFormActions";
 
 export const Register = () => {
-  // Form submit handler
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const data = new FormData(e.target as HTMLFormElement);
-    const email = data.get("email") as string | null;
-    const userName = data.get("userName") as string | null;
-    const password = data.get("password") as string | null;
-    const confirmPassword = data.get("confirmPassword") as string | null;
-
-    // Set params
-    const requestParams: RegisterUserType = {
-      email: email ? email.trim() : null,
-      userName: userName ? userName.trim() : null,
-      password: password ? password.trim() : null,
-      confirmPassword: confirmPassword ? confirmPassword.trim() : null,
-    };
-
-    // Request api
-    try {
-      const res = await AuthApi.register(requestParams);
-      console.log(res);
-      // localStorage.setItem("token", res.data.token);
-      console.log("Register successful");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // Form Actions
+  const {
+    handleSubmit,
+    emailErrText,
+    userNameErrText,
+    passwordErrText,
+    confirmErrText,
+    loading,
+  } = useFormActions();
 
   return (
     <>
-      <Box component="form" onSubmit={handleSubmit}>
+      <Box component="form" onSubmit={handleSubmit} noValidate>
         <TextField
           fullWidth
           id="email"
@@ -45,6 +25,9 @@ export const Register = () => {
           type="email"
           margin="normal"
           required
+          helperText={emailErrText}
+          error={!!emailErrText}
+          disabled={loading}
         />
         <TextField
           fullWidth
@@ -54,6 +37,9 @@ export const Register = () => {
           type="text"
           margin="normal"
           required
+          helperText={userNameErrText}
+          error={!!userNameErrText}
+          disabled={loading}
         />
         <TextField
           fullWidth
@@ -63,6 +49,9 @@ export const Register = () => {
           type="password"
           margin="normal"
           required
+          helperText={passwordErrText}
+          error={!!passwordErrText}
+          disabled={loading}
         />
         <TextField
           fullWidth
@@ -72,11 +61,14 @@ export const Register = () => {
           type="password"
           margin="normal"
           required
+          helperText={confirmErrText}
+          error={!!confirmErrText}
+          disabled={loading}
         />
         <LoadingButton
           fullWidth
           type="submit"
-          loading={false}
+          loading={loading}
           sx={{ mt: 3, mb: 2 }}
           children="アカウント作成"
         />

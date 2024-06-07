@@ -1,8 +1,9 @@
-import axios, { InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 const BASE_URL = "http://localhost:5050/api/v1";
 const axiosClient = axios.create({ baseURL: BASE_URL });
 
+// Get token from LocalStorage
 const getToken = () => {
   try {
     return localStorage.getItem("token");
@@ -14,20 +15,12 @@ const getToken = () => {
 
 // Request interceptors
 axiosClient.interceptors.request.use(
-  (config: any) => {
+  (config: InternalAxiosRequestConfig) => {
     const token = getToken();
-    const authHeaders = token
-      ? { authorization: `Bearer ${token}` }
-      : undefined;
+    const myConfig = config;
+    if (token) myConfig.headers.authorization = `Bearer ${token}`;
 
-    return {
-      ...config,
-      headers: {
-        ...config.headers,
-        ...authHeaders,
-        "Content-Type": "application/json",
-      },
-    };
+    return myConfig;
   },
   (error) => {
     return Promise.reject(error);
@@ -36,7 +29,7 @@ axiosClient.interceptors.request.use(
 
 // Response interceptors
 axiosClient.interceptors.response.use(
-  (response) => {
+  (response: AxiosResponse) => {
     return response;
   },
   (error) => {
