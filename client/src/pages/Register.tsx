@@ -3,10 +3,10 @@ import { LoadingButton } from "@mui/lab";
 import { Link } from "react-router-dom";
 import useFormActions from "src/hooks/useFormActions";
 
-export const Register = () => {
+export const Register: React.FC = () => {
   // Form Actions
   const {
-    handleSubmit,
+    handleRegisterSubmit,
     emailErrText,
     userNameErrText,
     passwordErrText,
@@ -16,7 +16,7 @@ export const Register = () => {
 
   return (
     <>
-      <Box component="form" onSubmit={handleSubmit} noValidate>
+      <Box component="form" onSubmit={handleRegisterSubmit} noValidate>
         <TextField
           fullWidth
           id="email"

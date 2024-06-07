@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import AuthApi, { RegisterUserType } from "src/api/AuthApi";
+import AuthApi, { LoginUserType, RegisterUserType } from "src/api/AuthApi";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "src/types/responseError";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +13,8 @@ const useFormActions = () => {
   const [confirmErrText, setConfirmErrText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  // Form submit handler
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  // Form register submit handler
+  const handleRegisterSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let isError = false;
@@ -82,8 +82,60 @@ const useFormActions = () => {
     }
   };
 
+  // Form login submit handler
+  const handleLoginSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    let isError = false;
+    setEmailErrText("");
+    setPasswordErrText("");
+
+    const data = new FormData(e.target as HTMLFormElement);
+    const email = data.get("email") as string | null;
+    const password = data.get("password") as string | null;
+
+    if (email === "") {
+      isError = true;
+      setEmailErrText("Emailを入力してください");
+    }
+    if (password === "") {
+      isError = true;
+      setPasswordErrText("パスワードを入力してください");
+    }
+    if (isError) return;
+    setLoading(true);
+
+    // Set params
+    const requestParams: LoginUserType = {
+      email: email ? email.trim() : null,
+      password: password ? password.trim() : null,
+    };
+
+    // Request api
+    try {
+      const res = await AuthApi.login(requestParams);
+      localStorage.setItem("token", res.data.token);
+      setLoading(false);
+      console.log("Login successful");
+
+      navigate("/");
+    } catch (error) {
+      const errs = (error as AxiosError<ErrorResponse>).response?.data?.errors;
+      errs?.forEach((err) => {
+        if (err.path === "email") setEmailErrText(err.msg);
+        if (err.path === "userName") setUserNameErrText(err.msg);
+        if (err.path === "password") setPasswordErrText(err.msg);
+        if (err.path === "confirmPassword") setConfirmErrText(err.msg);
+      });
+
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
   return {
-    handleSubmit,
+    handleRegisterSubmit,
+    handleLoginSubmit,
     emailErrText,
     userNameErrText,
     passwordErrText,

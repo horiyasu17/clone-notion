@@ -7,9 +7,17 @@ export type RegisterUserType = {
   confirmPassword: string | null;
 };
 
+export type LoginUserType = {
+  email: string | null;
+  password: string | null;
+};
+
 const authApi = {
   register: (params: RegisterUserType) => {
     return axiosClient.post("auth/register", params);
+  },
+  login: (params: LoginUserType) => {
+    return axiosClient.post("auth/login", params);
   },
 };
 
