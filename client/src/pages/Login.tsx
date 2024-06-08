@@ -1,16 +1,15 @@
-import { Box, Button, TextField } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import { Link } from "react-router-dom";
-import useFormActions from "src/hooks/useFormActions";
+import { Box, Button, TextField } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Link } from 'react-router-dom';
+import useFormActions from 'src/hooks/useFormActions';
 
 export const Login: React.FC = () => {
   // Form Actions
-  const { handleLoginSubmit, emailErrText, passwordErrText, loading } =
-    useFormActions();
+  const { handlerLoginSubmit, emailErrText, passwordErrText, loading } = useFormActions();
 
   return (
     <>
-      <Box component="form" onSubmit={handleLoginSubmit} noValidate>
+      <Box component="form" onSubmit={handlerLoginSubmit} noValidate>
         <TextField
           fullWidth
           id="email"
@@ -43,12 +42,7 @@ export const Login: React.FC = () => {
           children="ログイン"
         />
       </Box>
-      <Button
-        fullWidth
-        component={Link}
-        to="/register"
-        children="アカウントを持っていませんか？"
-      />
+      <Button fullWidth component={Link} to="/register" children="アカウントを持っていませんか？" />
     </>
   );
 };

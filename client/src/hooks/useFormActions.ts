@@ -1,53 +1,53 @@
-import { FormEvent, useState } from "react";
-import AuthApi, { LoginUserType, RegisterUserType } from "src/api/AuthApi";
-import { AxiosError } from "axios";
-import { ErrorResponse } from "src/types/responseError";
-import { useNavigate } from "react-router-dom";
+import { FormEvent, useState } from 'react';
+import AuthApi, { LoginUserType, RegisterUserType } from 'src/api/AuthApi';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from 'src/types/responseError';
+import { useNavigate } from 'react-router-dom';
 
 const useFormActions = () => {
   const navigate = useNavigate();
 
-  const [emailErrText, setEmailErrText] = useState<string>("");
-  const [userNameErrText, setUserNameErrText] = useState<string>("");
-  const [passwordErrText, setPasswordErrText] = useState<string>("");
-  const [confirmErrText, setConfirmErrText] = useState<string>("");
+  const [emailErrText, setEmailErrText] = useState<string>('');
+  const [userNameErrText, setUserNameErrText] = useState<string>('');
+  const [passwordErrText, setPasswordErrText] = useState<string>('');
+  const [confirmErrText, setConfirmErrText] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   // Form register submit handler
-  const handleRegisterSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handlerRegisterSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let isError = false;
-    setEmailErrText("");
-    setUserNameErrText("");
-    setPasswordErrText("");
-    setConfirmErrText("");
+    setEmailErrText('');
+    setUserNameErrText('');
+    setPasswordErrText('');
+    setConfirmErrText('');
 
     const data = new FormData(e.target as HTMLFormElement);
-    const email = data.get("email") as string | null;
-    const userName = data.get("userName") as string | null;
-    const password = data.get("password") as string | null;
-    const confirmPassword = data.get("confirmPassword") as string | null;
+    const email = data.get('email') as string | null;
+    const userName = data.get('userName') as string | null;
+    const password = data.get('password') as string | null;
+    const confirmPassword = data.get('confirmPassword') as string | null;
 
-    if (email === "") {
+    if (email === '') {
       isError = true;
-      setEmailErrText("Emailを入力してください");
+      setEmailErrText('Emailを入力してください');
     }
-    if (userName === "") {
+    if (userName === '') {
       isError = true;
-      setUserNameErrText("名前を入力してください");
+      setUserNameErrText('名前を入力してください');
     }
-    if (password === "") {
+    if (password === '') {
       isError = true;
-      setPasswordErrText("パスワードを入力してください");
+      setPasswordErrText('パスワードを入力してください');
     }
-    if (confirmPassword === "") {
+    if (confirmPassword === '') {
       isError = true;
-      setConfirmErrText("確認用パスワードを入力してください");
+      setConfirmErrText('確認用パスワードを入力してください');
     }
     if (password !== confirmPassword) {
       isError = true;
-      setConfirmErrText("パスワードと確認用パスワードが異なります");
+      setConfirmErrText('パスワードと確認用パスワードが異なります');
     }
     if (isError) return;
     setLoading(true);
@@ -63,18 +63,18 @@ const useFormActions = () => {
     // Request api
     try {
       const res = await AuthApi.register(requestParams);
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem('token', res.data.token);
       setLoading(false);
-      console.log("Register successful");
+      console.log('Register successful');
 
-      navigate("/");
+      navigate('/');
     } catch (error) {
       const errs = (error as AxiosError<ErrorResponse>).response?.data?.errors;
       errs?.forEach((err) => {
-        if (err.path === "email") setEmailErrText(err.msg);
-        if (err.path === "userName") setUserNameErrText(err.msg);
-        if (err.path === "password") setPasswordErrText(err.msg);
-        if (err.path === "confirmPassword") setConfirmErrText(err.msg);
+        if (err.path === 'email') setEmailErrText(err.msg);
+        if (err.path === 'userName') setUserNameErrText(err.msg);
+        if (err.path === 'password') setPasswordErrText(err.msg);
+        if (err.path === 'confirmPassword') setConfirmErrText(err.msg);
       });
 
       setLoading(false);
@@ -83,24 +83,24 @@ const useFormActions = () => {
   };
 
   // Form login submit handler
-  const handleLoginSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handlerLoginSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let isError = false;
-    setEmailErrText("");
-    setPasswordErrText("");
+    setEmailErrText('');
+    setPasswordErrText('');
 
     const data = new FormData(e.target as HTMLFormElement);
-    const email = data.get("email") as string | null;
-    const password = data.get("password") as string | null;
+    const email = data.get('email') as string | null;
+    const password = data.get('password') as string | null;
 
-    if (email === "") {
+    if (email === '') {
       isError = true;
-      setEmailErrText("Emailを入力してください");
+      setEmailErrText('Emailを入力してください');
     }
-    if (password === "") {
+    if (password === '') {
       isError = true;
-      setPasswordErrText("パスワードを入力してください");
+      setPasswordErrText('パスワードを入力してください');
     }
     if (isError) return;
     setLoading(true);
@@ -114,18 +114,18 @@ const useFormActions = () => {
     // Request api
     try {
       const res = await AuthApi.login(requestParams);
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem('token', res.data.token);
       setLoading(false);
-      console.log("Login successful");
+      console.log('Login successful');
 
-      navigate("/");
+      navigate('/');
     } catch (error) {
       const errs = (error as AxiosError<ErrorResponse>).response?.data?.errors;
       errs?.forEach((err) => {
-        if (err.path === "email") setEmailErrText(err.msg);
-        if (err.path === "userName") setUserNameErrText(err.msg);
-        if (err.path === "password") setPasswordErrText(err.msg);
-        if (err.path === "confirmPassword") setConfirmErrText(err.msg);
+        if (err.path === 'email') setEmailErrText(err.msg);
+        if (err.path === 'userName') setUserNameErrText(err.msg);
+        if (err.path === 'password') setPasswordErrText(err.msg);
+        if (err.path === 'confirmPassword') setConfirmErrText(err.msg);
       });
 
       setLoading(false);
@@ -134,8 +134,8 @@ const useFormActions = () => {
   };
 
   return {
-    handleRegisterSubmit,
-    handleLoginSubmit,
+    handlerRegisterSubmit,
+    handlerLoginSubmit,
     emailErrText,
     userNameErrText,
     passwordErrText,
