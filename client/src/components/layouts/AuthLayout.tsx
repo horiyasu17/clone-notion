@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useAuthorization } from "src/hooks/useAuthorization";
 
 export const AuthLayout = () => {
-  // check token
+  // check user login
   useAuthorization();
 
   return (
