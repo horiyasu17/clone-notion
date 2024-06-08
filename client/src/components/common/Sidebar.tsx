@@ -1,8 +1,11 @@
 import { Box, Drawer, IconButton, List, ListItemButton, Typography } from '@mui/material';
 import { AddBoxOutlined, LogoutOutlined } from '@mui/icons-material';
 import assets from 'src/assets';
+import { useCommon } from 'src/hooks/useCommon';
 
 export const Sidebar = () => {
+  const { handlerLogout } = useCommon();
+
   return (
     <Drawer
       container={window.document.body}
@@ -23,7 +26,7 @@ export const Sidebar = () => {
             <Typography variant="body2" fontWeight="700">
               Notion Clone
             </Typography>
-            <IconButton>
+            <IconButton onClick={handlerLogout}>
               <LogoutOutlined />
             </IconButton>
           </Box>
