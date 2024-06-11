@@ -17,7 +17,17 @@ const MemoController = () => {
     }
   };
 
-  return { create };
+  // Get all memo data
+  const getAll = async (_: Request, res: Response) => {
+    try {
+      const allData = await MemoModel.find({ userId: res.locals.user._id }).sort('-position');
+      return res.status(201).json(allData);
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  };
+
+  return { create, getAll };
 };
 
 export default MemoController;

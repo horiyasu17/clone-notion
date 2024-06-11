@@ -8,4 +8,7 @@ const memoCtrl = MemoController();
 // Create memo
 router.post('/', verifyToken, memoCtrl.create);
 
+// Get all memo data
+router.get('/', verifyToken, memoCtrl.getAll);
+
 export default router;

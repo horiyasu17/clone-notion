@@ -1,6 +1,6 @@
 import axiosClient from 'src/api/axiosClient';
 
-export interface MemoEntity extends Document {
+export interface RequestMemoType {
   title: string;
   description: string;
   position: number;
@@ -9,7 +9,7 @@ export interface MemoEntity extends Document {
 
 export type CreateMemoType = {};
 
-export type ResponseMemoType = {
+export type MemoEntity = {
   _id: string;
   userId: string;
   title: string;
@@ -21,7 +21,8 @@ export type ResponseMemoType = {
 };
 
 const memoApi = {
-  create: (): Promise<{ data: ResponseMemoType }> => axiosClient.post('memo'),
+  create: (): Promise<{ data: MemoEntity }> => axiosClient.post('/memo'),
+  getAll: (): Promise<{ data: MemoEntity[] }> => axiosClient.get('/memo'),
 };
 
 export default memoApi;

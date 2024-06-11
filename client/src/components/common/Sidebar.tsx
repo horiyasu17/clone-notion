@@ -2,13 +2,16 @@ import { Box, Drawer, IconButton, List, ListItemButton, Typography } from '@mui/
 import { AddBoxOutlined, LogoutOutlined } from '@mui/icons-material';
 import assets from 'src/assets';
 import { useCommon } from 'src/hooks/useCommon';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState, useSelector } from 'src/redux/store';
 import { Link } from 'react-router-dom';
+import { useSidebar } from 'src/hooks/useSidebar';
+import { MemoEntity } from 'src/api/memoApi';
 
 export const Sidebar = () => {
+  const { selectedMemoId } = useSidebar();
   const { handlerLogout } = useCommon();
   const userData = useSelector((state: RootState) => state.user.data);
+  const allMemoData = useSelector((state: RootState) => state.memo.data);
 
   return (
     <Drawer
@@ -35,42 +38,49 @@ export const Sidebar = () => {
             </IconButton>
           </Box>
         </ListItemButton>
-        <ListItemButton sx={{ mt: 2 }}>
-          <Box
-            sx={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Typography variant="body2" fontWeight="700">
-              お気に入り
-            </Typography>
-          </Box>
+        <ListItemButton
+          sx={{
+            width: '100%',
+            mt: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography variant="body2" fontWeight="700">
+            お気に入り
+          </Typography>
         </ListItemButton>
-        <ListItemButton>
-          <Box
-            sx={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Typography variant="body2" fontWeight="700">
-              プライベート
-            </Typography>
-            <IconButton>
-              <AddBoxOutlined fontSize="small" />
-            </IconButton>
-          </Box>
+        <ListItemButton
+          sx={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography variant="body2" fontWeight="700">
+            プライベート
+          </Typography>
+          <IconButton>
+            <AddBoxOutlined fontSize="small" />
+          </IconButton>
         </ListItemButton>
-        <ListItemButton>
-          <Box sx={{ pl: '20px' }} component={Link} to="/memo/1234">
-            <Typography>無題</Typography>
-          </Box>
-        </ListItemButton>
+
+        {/*メモ出力*/}
+        {0 < allMemoData.length &&
+          allMemoData.map((memo: MemoEntity) => (
+            <ListItemButton
+              component={Link}
+              to={`/memo/${memo._id}`}
+              key={memo._id}
+              selected={memo._id === selectedMemoId}
+            >
+              <Box sx={{ pl: '20px' }}>
+                <Typography>無題</Typography>
+              </Box>
+            </ListItemButton>
+          ))}
       </List>
     </Drawer>
   );
