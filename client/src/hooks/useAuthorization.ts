@@ -8,18 +8,19 @@ export const useAuthorization = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const pathname = useLocation().pathname;
+  const isAuthenticatedView = pathname !== '/login' && pathname !== '/register';
 
   useEffect(() => {
     // redirect root url
     (async () => {
       const token = localStorage.getItem('token');
-      if (!token && pathname !== '/login' && pathname !== '/register') navigate('/login');
+      if (!token && isAuthenticatedView) navigate('/login');
 
       try {
         const { data } = await authApi.verifyToken();
 
         if (data) {
-          // Save user
+          // Save user data
           dispatch(setUser(data.user));
           navigate('/');
         }
