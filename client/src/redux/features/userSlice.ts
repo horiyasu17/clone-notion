@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserEntity } from 'src/api/AuthApi';
 
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    value: '',
+    data: {} as UserEntity,
   },
   reducers: {
-    setUser: (state, action: PayloadAction<string>) => {
-      // state.value = action.payload;
+    setUser: (state, action: PayloadAction<UserEntity>) => {
+      state.data = action.payload;
     },
   },
 });

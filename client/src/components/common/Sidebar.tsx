@@ -2,9 +2,12 @@ import { Box, Drawer, IconButton, List, ListItemButton, Typography } from '@mui/
 import { AddBoxOutlined, LogoutOutlined } from '@mui/icons-material';
 import assets from 'src/assets';
 import { useCommon } from 'src/hooks/useCommon';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
 
 export const Sidebar = () => {
   const { handlerLogout } = useCommon();
+  const userData = useSelector((state: RootState) => state.user.data);
 
   return (
     <Drawer
@@ -24,7 +27,7 @@ export const Sidebar = () => {
             }}
           >
             <Typography variant="body2" fontWeight="700">
-              Notion Clone
+              {userData.userName}
             </Typography>
             <IconButton onClick={handlerLogout}>
               <LogoutOutlined />

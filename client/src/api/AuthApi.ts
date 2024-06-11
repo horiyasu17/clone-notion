@@ -1,4 +1,4 @@
-import axiosClient from "src/api/axiosClient";
+import axiosClient from 'src/api/axiosClient';
 
 export type RegisterUserType = {
   email: string | null;
@@ -12,7 +12,7 @@ export type LoginUserType = {
   password: string | null;
 };
 
-type UserEntity = {
+export type UserEntity = {
   email: string;
   userName: string;
   password: string;
@@ -31,10 +31,10 @@ export type ResponseUser = {
 
 const authApi = {
   register: (params: RegisterUserType): Promise<{ data: ResponseUserToken }> =>
-    axiosClient.post("auth/register", params),
+    axiosClient.post('auth/register', params),
   login: (params: LoginUserType): Promise<{ data: ResponseUserToken }> =>
-    axiosClient.post("auth/login", params),
-  verifyToken: (): Promise<{ data: ResponseUser }> => axiosClient.post("auth/verify-token"),
+    axiosClient.post('auth/login', params),
+  verifyToken: (): Promise<{ data: ResponseUser }> => axiosClient.post('auth/verify-token'),
 };
 
 export default authApi;
