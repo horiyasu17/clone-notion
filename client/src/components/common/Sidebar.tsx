@@ -4,6 +4,7 @@ import assets from 'src/assets';
 import { useCommon } from 'src/hooks/useCommon';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
+import { Link } from 'react-router-dom';
 
 export const Sidebar = () => {
   const { handlerLogout } = useCommon();
@@ -63,6 +64,11 @@ export const Sidebar = () => {
             <IconButton>
               <AddBoxOutlined fontSize="small" />
             </IconButton>
+          </Box>
+        </ListItemButton>
+        <ListItemButton>
+          <Box sx={{ pl: '20px' }} component={Link} to="/memo">
+            <Typography>無題</Typography>
           </Box>
         </ListItemButton>
       </List>
