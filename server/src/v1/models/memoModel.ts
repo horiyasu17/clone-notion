@@ -1,25 +1,19 @@
 import { Document, Schema, Types, model } from 'mongoose';
 
 export interface MemoDoc extends Document {
-  user: Types.ObjectId;
-  icon: string;
+  userId: Types.ObjectId;
   title: string;
   description: string;
   position: number;
-  favorite: boolean;
   favoritePosition: number;
 }
 
 const memoSchema = new Schema(
   {
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
-    },
-    icon: {
-      type: String,
-      default: '📝',
     },
     title: {
       type: String,
@@ -31,10 +25,6 @@ const memoSchema = new Schema(
     },
     position: {
       type: Number,
-    },
-    favorite: {
-      type: Boolean,
-      default: false,
     },
     favoritePosition: {
       type: Number,
