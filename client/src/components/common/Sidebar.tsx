@@ -67,7 +67,7 @@ export const Sidebar = () => {
           </Box>
         </ListItemButton>
         <ListItemButton>
-          <Box sx={{ pl: '20px' }} component={Link} to="/memo">
+          <Box sx={{ pl: '20px' }} component={Link} to="/memo/1234">
             <Typography>無題</Typography>
           </Box>
         </ListItemButton>

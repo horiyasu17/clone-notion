@@ -9,6 +9,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { blue } from '@mui/material/colors';
 import { Provider } from 'react-redux';
 import { store } from 'src/redux/store';
+import { Memo } from 'src/pages/Memo';
 
 function App() {
   const theme = createTheme({
@@ -28,6 +29,7 @@ function App() {
             <Route path="/" element={<AppLayout />}>
               <Route index element={<Home />} />
               <Route path="memo" element={<Home />} />
+              <Route path="memo/:memoId" element={<Memo />} />
             </Route>
           </Routes>
         </BrowserRouter>
