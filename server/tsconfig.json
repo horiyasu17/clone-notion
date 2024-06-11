@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "src": ["./src"]
+    },
     "esModuleInterop": true,
     "outDir": "./dist",
     "rootDir": "./src",
