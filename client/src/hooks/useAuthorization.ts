@@ -1,9 +1,9 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 import authApi from 'src/api/AuthApi';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'src/redux/features/userSlice';
 import { AppDispatch } from 'src/redux/store';
+import { useEffect } from 'react';
 
 export const useAuthorization = () => {
   const navigate = useNavigate();
@@ -11,23 +11,20 @@ export const useAuthorization = () => {
   const pathname = useLocation().pathname;
   const isAuthenticatedView = pathname !== '/login' && pathname !== '/register';
 
+  // Check authorized
   useEffect(() => {
-    // redirect root url
     (async () => {
       const token = localStorage.getItem('token');
       if (!token && isAuthenticatedView) navigate('/login');
+      if (!token) return;
 
       try {
         const { data } = await authApi.verifyToken();
-
-        if (data) {
-          // Save user data
-          dispatch(setUser(data.user));
-          navigate('/');
-        }
-      } catch {
-        return false;
+        if (data) dispatch(setUser(data.user));
+        if (data && !isAuthenticatedView) navigate('/');
+      } catch (error) {
+        alert(error);
       }
     })();
-  }, [navigate, dispatch]);
+  }, [navigate, dispatch, isAuthenticatedView]);
 };

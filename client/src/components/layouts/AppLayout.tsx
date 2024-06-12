@@ -1,3 +1,4 @@
+import React from 'react';
 import { useAuthorization } from 'src/hooks/useAuthorization';
 import { Box } from '@mui/material';
 import { Sidebar } from 'src/components/common/Sidebar';
