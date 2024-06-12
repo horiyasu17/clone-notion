@@ -27,7 +27,19 @@ const MemoController = () => {
     }
   };
 
-  return { create, getAll };
+  // Get memo data
+  const getOne = async (req: Request, res: Response) => {
+    const { memoId } = req.params;
+    try {
+      const memo = await MemoModel.findOne({ userId: res.locals.user._id, _id: memoId });
+      if (!memo) return res.status(404).json({ error: 'メモが存在しません' });
+      return res.status(201).json(memo);
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  };
+
+  return { create, getAll, getOne };
 };
 
 export default MemoController;
