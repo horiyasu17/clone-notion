@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setAllMemoData } from 'src/redux/features/memoSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AppDispatch } from 'src/redux/store';
+import { AxiosError } from 'axios';
 
 export const useSidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,8 +18,8 @@ export const useSidebar = () => {
       try {
         const { data } = await memoApi.getAll();
         dispatch(setAllMemoData(data));
-      } catch (error) {
-        alert(error);
+      } catch (error: unknown) {
+        if (error instanceof AxiosError) alert(error.response?.data);
       }
     })();
   }, [dispatch]);
