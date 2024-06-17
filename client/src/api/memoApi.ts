@@ -10,6 +10,7 @@ export interface RequestMemoType {
 export type CreateMemoType = {};
 
 export type MemoEntity = {
+  __v: number;
   _id: string;
   userId: string;
   title: string;
@@ -23,6 +24,7 @@ export type MemoEntity = {
 const memoApi = {
   create: (): Promise<{ data: MemoEntity }> => axiosClient.post('/memo'),
   getAll: (): Promise<{ data: MemoEntity[] }> => axiosClient.get('/memo'),
+  get: (memoId: string): Promise<{ data: MemoEntity }> => axiosClient.get(`/memo/${memoId}`),
 };
 
 export default memoApi;

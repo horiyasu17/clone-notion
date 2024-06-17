@@ -1,7 +1,10 @@
 import { Box, IconButton, TextField } from '@mui/material';
 import { DeleteOutline, StarBorderOutlined } from '@mui/icons-material';
+import { useMemo } from 'src/hooks/useMemo';
 
 export const Memo = () => {
+  const { memoData, updateMemo } = useMemo();
+
   const styles = {
     titleField: {
       '.MuiOutlinedInput-notchedOutline': { border: 'none' },
@@ -33,9 +36,18 @@ export const Memo = () => {
         </IconButton>
       </Box>
       <Box sx={{ p: '10px 50px' }}>
-        <TextField placeholder="無題" variant="outlined" fullWidth sx={styles.titleField} />
+        <TextField
+          placeholder="無題"
+          value={memoData ? memoData.title : ''}
+          onChange={(e) => updateMemo('title', e)}
+          variant="outlined"
+          fullWidth
+          sx={styles.titleField}
+        />
         <TextField
           placeholder="追加"
+          value={memoData ? memoData.description : ''}
+          onChange={(e) => updateMemo('description', e)}
           variant="outlined"
           fullWidth
           sx={styles.textField}
