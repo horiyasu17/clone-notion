@@ -21,7 +21,8 @@ export const Sidebar = () => {
       sx={{ width: 250, height: '100vh' }}
     >
       <List sx={{ width: 250, height: '100vh', backgroundColor: assets.colors.secondary }}>
-        <ListItemButton>
+        {/*ユーザーネーム(ホーム)*/}
+        <ListItemButton component={Link} to={`/`}>
           <Box
             sx={{
               width: '100%',
@@ -33,9 +34,6 @@ export const Sidebar = () => {
             <Typography variant="body2" fontWeight="700">
               {userData.userName}
             </Typography>
-            <IconButton onClick={handlerLogout}>
-              <LogoutOutlined />
-            </IconButton>
           </Box>
         </ListItemButton>
         <ListItemButton
@@ -81,6 +79,22 @@ export const Sidebar = () => {
               </Box>
             </ListItemButton>
           ))}
+
+        {/*ログアウト*/}
+        <ListItemButton onClick={handlerLogout}>
+          <Box
+            sx={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Typography variant="body2" fontWeight="700">
+              ログアウト
+            </Typography>
+            <LogoutOutlined sx={{ ml: 2 }} />
+          </Box>
+        </ListItemButton>
       </List>
     </Drawer>
   );
