@@ -14,4 +14,7 @@ router.get('/', verifyToken, memoCtrl.getAll);
 // Get memo data
 router.get('/:memoId', verifyToken, memoCtrl.getOne);
 
+// Update memo data
+router.put('/:memoId', verifyToken, memoCtrl.update);
+
 export default router;
