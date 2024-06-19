@@ -1,14 +1,5 @@
 import axiosClient from 'src/api/axiosClient';
 
-export interface RequestMemoType {
-  title: string;
-  description: string;
-  position: number;
-  favoritePosition: number;
-}
-
-export type CreateMemoType = {};
-
 export type MemoEntity = {
   __v: number;
   _id: string;
@@ -25,6 +16,8 @@ const memoApi = {
   create: (): Promise<{ data: MemoEntity }> => axiosClient.post('/memo'),
   getAll: (): Promise<{ data: MemoEntity[] }> => axiosClient.get('/memo'),
   get: (memoId: string): Promise<{ data: MemoEntity }> => axiosClient.get(`/memo/${memoId}`),
+  update: (memoId: string, params: MemoEntity): Promise<{ data: MemoEntity }> =>
+    axiosClient.put(`/memo/${memoId}`, params),
 };
 
 export default memoApi;
