@@ -61,7 +61,23 @@ const MemoController = () => {
     }
   };
 
-  return { create, getAll, getOne, update };
+  // Delete memo data
+  const deleteData = async (req: Request, res: Response) => {
+    const { memoId } = req.params;
+
+    try {
+      const memo = await MemoModel.findOne({ userId: res.locals.user._id, _id: memoId });
+      if (!memo) return res.status(404).json({ error: 'メモが存在しません' });
+
+      const deletedMemo = await MemoModel.findByIdAndDelete(memoId);
+
+      return res.status(201).json(deletedMemo);
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  };
+
+  return { create, getAll, getOne, update, deleteData };
 };
 
 export default MemoController;

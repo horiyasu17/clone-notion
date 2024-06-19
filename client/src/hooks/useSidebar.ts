@@ -15,11 +15,15 @@ export const useSidebar = () => {
   // create memo
   const createMemo = useCallback(async () => {
     try {
+      // create memo
       await memoApi.create();
+      // update sidebar memo title
+      const { data } = await memoApi.getAll();
+      dispatch(setAllMemoData(data));
     } catch (error: unknown) {
       if (error instanceof AxiosError) alert(error);
     }
-  }, []);
+  }, [memoId]);
 
   useEffect(() => {
     // Get all memo data

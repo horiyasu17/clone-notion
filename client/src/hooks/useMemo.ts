@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import memoApi, { MemoEntity } from 'src/api/memoApi';
 import { AxiosError } from 'axios';
@@ -11,6 +11,7 @@ export type InputFormType = 'title' | 'description';
 
 export const useMemo = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { memoId } = useParams();
   const [memoData, setMemoData] = useState<MemoEntity | null>(null);
 
@@ -27,7 +28,9 @@ export const useMemo = () => {
       debounce(async () => {
         try {
           if (memoId) {
+            // update memo
             await memoApi.update(memoId, currentUpdateMemo);
+            // update sidebar memo title
             if (formName === 'title') {
               const { data } = await memoApi.getAll();
               dispatch(setAllMemoData(data));
@@ -40,8 +43,23 @@ export const useMemo = () => {
         }
       });
     },
-    [],
+    [memoId],
   );
+
+  // delete memo
+  const deleteMemo = useCallback(async () => {
+    if (!memoId) return;
+
+    try {
+      // delete memo
+      await memoApi.delete(memoId);
+      // update sidebar memo title
+      const { data } = await memoApi.getAll();
+      dispatch(setAllMemoData(data));
+      // redirect home
+      navigate('/');
+    } catch (error: unknown) {}
+  }, [memoId]);
 
   useEffect(() => {
     // Get memo content
@@ -59,5 +77,5 @@ export const useMemo = () => {
       })();
   }, [memoId]);
 
-  return { memoData, updateMemo };
+  return { memoData, updateMemo, deleteMemo };
 };

@@ -1,9 +1,9 @@
 let timerId: NodeJS.Timeout;
-const DELAY = 1000;
+const DEFAULT_DELAY = 500;
 
-export const debounce = (func: () => void) => {
+export const debounce = (func: () => void, delay = DEFAULT_DELAY) => {
   if (timerId) clearTimeout(timerId);
   timerId = setTimeout(() => {
     func();
-  }, DELAY);
+  }, delay);
 };

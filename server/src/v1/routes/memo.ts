@@ -17,4 +17,7 @@ router.get('/:memoId', verifyToken, memoCtrl.getOne);
 // Update memo data
 router.put('/:memoId', verifyToken, memoCtrl.update);
 
+// Delete memo data
+router.delete('/:memoId', verifyToken, memoCtrl.deleteData);
+
 export default router;

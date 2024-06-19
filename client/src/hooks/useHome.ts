@@ -8,7 +8,7 @@ export const useHome = () => {
   const handlerCreateMemo = async () => {
     try {
       setCreateMemoLoading(true);
-      const { data } = await memoApi.create();
+      await memoApi.create();
     } catch (error) {
       alert(error);
     } finally {

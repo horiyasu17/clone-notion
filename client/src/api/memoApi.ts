@@ -18,6 +18,7 @@ const memoApi = {
   get: (memoId: string): Promise<{ data: MemoEntity }> => axiosClient.get(`/memo/${memoId}`),
   update: (memoId: string, params: MemoEntity): Promise<{ data: MemoEntity }> =>
     axiosClient.put(`/memo/${memoId}`, params),
+  delete: (memoId: string): Promise<{ data: MemoEntity }> => axiosClient.delete(`/memo/${memoId}`),
 };
 
 export default memoApi;

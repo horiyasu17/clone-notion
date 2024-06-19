@@ -3,7 +3,7 @@ import { DeleteOutline, StarBorderOutlined } from '@mui/icons-material';
 import { useMemo } from 'src/hooks/useMemo';
 
 export const Memo = () => {
-  const { memoData, updateMemo } = useMemo();
+  const { memoData, updateMemo, deleteMemo } = useMemo();
 
   const styles = {
     titleField: {
@@ -31,7 +31,7 @@ export const Memo = () => {
         <IconButton>
           <StarBorderOutlined />
         </IconButton>
-        <IconButton color="error">
+        <IconButton color="error" onClick={deleteMemo}>
           <DeleteOutline />
         </IconButton>
       </Box>
