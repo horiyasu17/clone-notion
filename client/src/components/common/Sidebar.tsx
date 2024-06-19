@@ -8,7 +8,7 @@ import { useSidebar } from 'src/hooks/useSidebar';
 import { MemoEntity } from 'src/api/memoApi';
 
 export const Sidebar = () => {
-  const { selectedMemoId } = useSidebar();
+  const { selectedMemoId, createMemo } = useSidebar();
   const { handlerLogout } = useCommon();
   const userData = useSelector((state: RootState) => state.user.data);
   const allMemoData = useSelector((state: RootState) => state.memo.data);
@@ -21,7 +21,7 @@ export const Sidebar = () => {
       sx={{ width: 250, height: '100vh' }}
     >
       <List sx={{ width: 250, height: '100vh', backgroundColor: assets.colors.secondary }}>
-        {/*ユーザーネーム(ホーム)*/}
+        {/*USER NAME*/}
         <ListItemButton component={Link} to={`/`}>
           <Box
             sx={{
@@ -36,6 +36,8 @@ export const Sidebar = () => {
             </Typography>
           </Box>
         </ListItemButton>
+
+        {/*FAVORITE*/}
         <ListItemButton
           sx={{
             width: '100%',
@@ -49,6 +51,8 @@ export const Sidebar = () => {
             お気に入り
           </Typography>
         </ListItemButton>
+
+        {/*PRIVATE*/}
         <ListItemButton
           sx={{
             width: '100%',
@@ -60,12 +64,12 @@ export const Sidebar = () => {
           <Typography variant="body2" fontWeight="700">
             プライベート
           </Typography>
-          <IconButton>
+          <IconButton onClick={createMemo}>
             <AddBoxOutlined fontSize="small" />
           </IconButton>
         </ListItemButton>
 
-        {/*メモ出力*/}
+        {/*MEMO TITLE*/}
         {0 < allMemoData.length &&
           allMemoData.map((memo: MemoEntity) => (
             <ListItemButton
@@ -75,12 +79,12 @@ export const Sidebar = () => {
               selected={memo._id === selectedMemoId}
             >
               <Box sx={{ pl: '20px' }}>
-                <Typography>無題</Typography>
+                <Typography>{memo.title}</Typography>
               </Box>
             </ListItemButton>
           ))}
 
-        {/*ログアウト*/}
+        {/*LOGOUT*/}
         <ListItemButton onClick={handlerLogout}>
           <Box
             sx={{

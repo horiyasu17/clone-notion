@@ -9,7 +9,6 @@ export const useHome = () => {
     try {
       setCreateMemoLoading(true);
       const { data } = await memoApi.create();
-      console.log(data);
     } catch (error) {
       alert(error);
     } finally {
