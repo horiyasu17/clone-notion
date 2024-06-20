@@ -27,10 +27,10 @@ export const useAuthorization = () => {
         const { data } = await authApi.verifyToken();
         if (data) dispatch(setUser(data.user));
         if (data && !isAuthenticatedView) navigate('/');
-      } catch (error) {
+      } catch (error: unknown) {
         if (error instanceof AxiosError) {
           handlerLogout();
-          alert(error.response?.data);
+          alert(error.message);
         }
       }
     })();

@@ -21,7 +21,7 @@ export const useSidebar = () => {
       const { data } = await memoApi.getAll();
       dispatch(setAllMemoData(data));
     } catch (error: unknown) {
-      if (error instanceof AxiosError) alert(error);
+      if (error instanceof AxiosError) alert(error.message);
     }
   }, [memoId]);
 
@@ -32,7 +32,7 @@ export const useSidebar = () => {
         const { data } = await memoApi.getAll();
         dispatch(setAllMemoData(data));
       } catch (error: unknown) {
-        if (error instanceof AxiosError) alert(error.response?.data);
+        if (error instanceof AxiosError) alert(error.message);
       }
     })();
   }, [dispatch]);
