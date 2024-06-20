@@ -5,12 +5,13 @@ import { AxiosError } from 'axios';
 import { debounce } from 'src/util/debounce';
 import { setAllMemoData } from 'src/redux/features/memoSlice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from 'src/redux/store';
+import { AppDispatch, RootState, useSelector } from 'src/redux/store';
 
 export type InputFormType = 'title' | 'description';
 
 export const useMemo = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const allMemoData = useSelector((state: RootState) => state.memo.data);
   const navigate = useNavigate();
   const { memoId } = useParams();
   const [memoData, setMemoData] = useState<MemoEntity | null>(null);
@@ -21,6 +22,13 @@ export const useMemo = () => {
       let currentUpdateMemo: MemoEntity;
       setMemoData((prevState) => {
         currentUpdateMemo = { ...prevState, [formName]: e.target.value } as MemoEntity;
+
+        // update sidebar memo title
+        const allMemo = allMemoData.map((memo: MemoEntity) => {
+          return currentUpdateMemo._id === memo._id ? { ...memo, ...currentUpdateMemo } : memo;
+        });
+        dispatch(setAllMemoData(allMemo));
+
         return currentUpdateMemo;
       });
 
@@ -30,16 +38,9 @@ export const useMemo = () => {
           if (memoId) {
             // update memo
             await memoApi.update(memoId, currentUpdateMemo);
-            // update sidebar memo title
-            if (formName === 'title') {
-              const { data } = await memoApi.getAll();
-              dispatch(setAllMemoData(data));
-            }
           }
         } catch (error: unknown) {
-          if (error instanceof AxiosError) {
-            alert(error);
-          }
+          if (error instanceof AxiosError) alert(error.message);
         }
       });
     },
@@ -53,12 +54,30 @@ export const useMemo = () => {
     try {
       // delete memo
       await memoApi.delete(memoId);
+
       // update sidebar memo title
-      const { data } = await memoApi.getAll();
-      dispatch(setAllMemoData(data));
-      // redirect home
-      navigate('/');
-    } catch (error: unknown) {}
+      let deleteItemIndex: number = 0;
+      const allMemo = allMemoData.filter((memo: MemoEntity, index: number) => {
+        if (memo._id === memoId) {
+          deleteItemIndex = index;
+          return false;
+        } else {
+          return true;
+        }
+      });
+      dispatch(setAllMemoData(allMemo));
+
+      // redirect
+      if (deleteItemIndex !== 0) {
+        navigate(`/memo/${allMemo[deleteItemIndex - 1]._id}`);
+      } else if (deleteItemIndex === 0 && 0 < allMemo.length) {
+        navigate(`/memo/${allMemo[0]._id}`);
+      } else {
+        navigate('/');
+      }
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) alert(error.message);
+    }
   }, [memoId]);
 
   useEffect(() => {
@@ -71,7 +90,7 @@ export const useMemo = () => {
         } catch (error: unknown) {
           if (error instanceof AxiosError) {
             setMemoData(null);
-            alert(error.response?.data);
+            alert(error.message);
           }
         }
       })();
