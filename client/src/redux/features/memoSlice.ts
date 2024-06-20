@@ -4,11 +4,11 @@ import { MemoEntity } from 'src/api/memoApi';
 export const memoSlice = createSlice({
   name: 'memo',
   initialState: {
-    data: [] as MemoEntity[],
+    allData: [] as MemoEntity[],
   },
   reducers: {
     setAllMemoData: (state, action: PayloadAction<MemoEntity[]>) => {
-      state.data = action.payload;
+      state.allData = action.payload;
     },
   },
 });

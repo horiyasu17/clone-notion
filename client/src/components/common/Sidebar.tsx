@@ -11,7 +11,7 @@ export const Sidebar = () => {
   const { selectedMemoId, createMemo } = useSidebar();
   const { handlerLogout } = useCommon();
   const userData = useSelector((state: RootState) => state.user.data);
-  const allMemoData = useSelector((state: RootState) => state.memo.data);
+  const allMemoData = useSelector((state: RootState) => state.memo.allData);
 
   return (
     <Drawer

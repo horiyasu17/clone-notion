@@ -11,7 +11,7 @@ export type InputFormType = 'title' | 'description';
 
 export const useMemo = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const allMemoData = useSelector((state: RootState) => state.memo.data);
+  const allMemoData = useSelector((state: RootState) => state.memo.allData);
   const navigate = useNavigate();
   const { memoId } = useParams();
   const [memoData, setMemoData] = useState<MemoEntity | null>(null);

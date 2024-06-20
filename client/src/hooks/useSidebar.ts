@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 export const useSidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const allMemoData = useSelector((state: RootState) => state.memo.data);
+  const allMemoData = useSelector((state: RootState) => state.memo.allData);
   const { memoId } = useParams();
   const navigate = useNavigate();
   const [selectedMemoId, setSelectedMemoId] = useState<string | null>(null);
