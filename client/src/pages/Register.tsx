@@ -1,12 +1,12 @@
-import { Box, Button, TextField } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import { Link } from "react-router-dom";
-import useFormActions from "src/hooks/useFormActions";
+import { Box, Button, TextField } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Link } from 'react-router-dom';
+import useFormActions from 'src/hooks/useFormActions';
 
 export const Register: React.FC = () => {
   // Form Actions
   const {
-    handleRegisterSubmit,
+    handlerRegisterSubmit,
     emailErrText,
     userNameErrText,
     passwordErrText,
@@ -16,7 +16,7 @@ export const Register: React.FC = () => {
 
   return (
     <>
-      <Box component="form" onSubmit={handleRegisterSubmit} noValidate>
+      <Box component="form" onSubmit={handlerRegisterSubmit} noValidate>
         <TextField
           fullWidth
           id="email"
@@ -73,12 +73,7 @@ export const Register: React.FC = () => {
           children="アカウント作成"
         />
       </Box>
-      <Button
-        fullWidth
-        component={Link}
-        to="/login"
-        children="既にアカウントを持っていますか？"
-      />
+      <Button fullWidth component={Link} to="/login" children="既にアカウントを持っていますか？" />
     </>
   );
 };

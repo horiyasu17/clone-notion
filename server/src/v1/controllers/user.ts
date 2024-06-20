@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
-import { AES, enc } from "crypto-js";
-import { UserModel, UserDoc } from "../models/userModel";
-import jwt from "jsonwebtoken";
+import { Request, Response } from 'express';
+import { AES, enc } from 'crypto-js';
+import { UserModel, UserDoc } from '../models/userModel';
+import jwt from 'jsonwebtoken';
 
-const userController = () => {
+const UserController = () => {
   // Register user
   const register = async (req: Request<UserDoc>, res: Response) => {
     const password = req.body.password;
@@ -16,7 +16,7 @@ const userController = () => {
       const user = await UserModel.create(req.body);
       // Create JWT
       const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
-        expiresIn: "24h",
+        expiresIn: '24h',
       });
 
       return res.status(200).json({ user, token });
@@ -47,19 +47,18 @@ const userController = () => {
       if (isError)
         return res.status(401).json({
           errors: [
-            { path: "email", msg: "Emailかパスワードが無効です" },
-            { path: "password", msg: "Emailかパスワードが無効です" },
+            { path: 'email', msg: 'Emailかパスワードが無効です' },
+            { path: 'password', msg: 'Emailかパスワードが無効です' },
           ],
         });
 
       // Create JWT
       const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
-        expiresIn: "24h",
+        expiresIn: '24h',
       });
 
       return res.status(200).json({ user, token });
     } catch (error) {
-      console.log("error");
       return res.status(500).json(error);
     }
   };
@@ -72,4 +71,4 @@ const userController = () => {
   return { register, login, verifyToken };
 };
 
-export default userController;
+export default UserController;

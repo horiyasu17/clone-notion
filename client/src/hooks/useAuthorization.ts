@@ -1,22 +1,38 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import authApi from "src/api/AuthApi";
+import { useNavigate, useLocation } from 'react-router-dom';
+import authApi from 'src/api/AuthApi';
+import { useDispatch } from 'react-redux';
+import { setUser } from 'src/redux/features/userSlice';
+import { AppDispatch } from 'src/redux/store';
+import { useEffect } from 'react';
+import { useCommon } from 'src/hooks/useCommon';
+import { AxiosError } from 'axios';
 
 export const useAuthorization = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const { handlerLogout } = useCommon();
+  const pathname = useLocation().pathname;
+  const isAuthenticatedView = pathname !== '/login' && pathname !== '/register';
 
+  // Check authorized
   useEffect(() => {
-    // redirect root url
     (async () => {
-      const token = localStorage.getItem("token");
-      if (!token) navigate("/login");
+      // Check exist token
+      const token = localStorage.getItem('token');
+      if (!token && isAuthenticatedView) navigate('/login');
+      if (!token) return;
 
       try {
-        const res = await authApi.verifyToken();
-        if (res) navigate("/");
-      } catch {
-        return false;
+        // Check authorized token
+        const { data } = await authApi.verifyToken();
+        if (data) dispatch(setUser(data.user));
+        if (data && !isAuthenticatedView) navigate('/');
+      } catch (error: unknown) {
+        if (error instanceof AxiosError) {
+          handlerLogout();
+          alert(error.message);
+        }
       }
     })();
-  }, [navigate]);
+  }, [navigate, dispatch, isAuthenticatedView]);
 };
