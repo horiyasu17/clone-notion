@@ -1,23 +1,10 @@
 import { Box, IconButton, TextField } from '@mui/material';
 import { DeleteOutline, StarBorderOutlined } from '@mui/icons-material';
 import { useMemo } from 'src/hooks/useMemo';
+import { styles } from 'src/assets/css/memoStyles';
 
 export const Memo = () => {
   const { memoData, updateMemo, deleteMemo } = useMemo();
-
-  const styles = {
-    titleField: {
-      '.MuiOutlinedInput-notchedOutline': { border: 'none' },
-      '.MuiInputBase-root': { fontSize: '2rem', fontWeight: 700 },
-      '.MuiInputBase-input': { p: 0 },
-    },
-    textField: {
-      '.MuiOutlinedInput-notchedOutline': { border: 'none' },
-      '.MuiInputBase-root': { fontSize: '1rem' },
-      '.MuiOutlinedInput-root': { p: 0 },
-      '.MuiInputBase-input': { p: 0 },
-    },
-  };
 
   return (
     <>
