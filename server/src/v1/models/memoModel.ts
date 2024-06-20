@@ -4,7 +4,7 @@ export interface MemoDoc extends Document {
   userId: Types.ObjectId;
   title: string;
   description: string;
-  iconCode: string;
+  icon: string;
   position: number;
   favoritePosition: number;
 }
@@ -24,7 +24,7 @@ const memoSchema = new Schema(
       type: String,
       default: 'ここに自由に記入してください',
     },
-    iconCode: {
+    icon: {
       type: String,
       default: '📝',
     },

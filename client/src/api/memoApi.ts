@@ -6,6 +6,7 @@ export type MemoEntity = {
   userId: string;
   title: string;
   description: string;
+  icon: string;
   position: number;
   favoritePosition: number;
   createdAt: Date;
