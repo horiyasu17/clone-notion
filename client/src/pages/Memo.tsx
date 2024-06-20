@@ -2,6 +2,7 @@ import { Box, IconButton, TextField } from '@mui/material';
 import { DeleteOutline, StarBorderOutlined } from '@mui/icons-material';
 import { useMemo } from 'src/hooks/useMemo';
 import { styles } from 'src/assets/css/memoStyles';
+import { EmojiPicker } from 'src/components/common/EmojiPicker';
 
 export const Memo = () => {
   const { memoData, updateMemo, deleteMemo } = useMemo();
@@ -23,6 +24,7 @@ export const Memo = () => {
         </IconButton>
       </Box>
       <Box sx={{ p: '10px 50px' }}>
+        <EmojiPicker memoData={memoData} />
         <TextField
           placeholder="無題"
           value={memoData ? memoData.title : ''}

@@ -18,7 +18,7 @@ export const Sidebar = () => {
       container={window.document.body}
       variant="permanent"
       open={true}
-      sx={{ width: 250, height: '100vh' }}
+      sx={{ width: 250, height: '100vh', position: 'relative', zIndex: 80 }}
     >
       <List sx={{ width: 250, height: '100vh', backgroundColor: assets.colors.secondary }}>
         {/*USER NAME*/}
@@ -78,8 +78,8 @@ export const Sidebar = () => {
               key={memo._id}
               selected={memo._id === selectedMemoId}
             >
-              <Box sx={{ pl: '20px' }}>
-                <Typography>{memo.title}</Typography>
+              <Box sx={{ pl: '15px' }}>
+                <Typography>{`${memo.icon} ${memo.title}`}</Typography>
               </Box>
             </ListItemButton>
           ))}
