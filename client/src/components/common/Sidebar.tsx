@@ -1,5 +1,5 @@
 import { Box, Drawer, IconButton, List, ListItemButton, Typography } from '@mui/material';
-import { AddBoxOutlined, LogoutOutlined } from '@mui/icons-material';
+import { Home, AddBoxOutlined, Logout } from '@mui/icons-material';
 import assets from 'src/assets';
 import { useCommon } from 'src/hooks/useCommon';
 import { RootState, useSelector } from 'src/redux/store';
@@ -22,19 +22,22 @@ export const Sidebar = () => {
     >
       <List sx={{ width: 250, height: '100vh', backgroundColor: assets.colors.secondary }}>
         {/*USER NAME*/}
-        <ListItemButton component={Link} to={`/`}>
-          <Box
-            sx={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Typography variant="body2" fontWeight="700">
-              {userData.userName}
-            </Typography>
-          </Box>
+        <ListItemButton
+          component={Link}
+          to={`/`}
+          sx={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography variant="body2" fontWeight="700">
+            {userData.userName}
+          </Typography>
+          <IconButton>
+            <Home fontSize="small" />
+          </IconButton>
         </ListItemButton>
 
         {/*FAVORITE*/}
@@ -85,19 +88,21 @@ export const Sidebar = () => {
           ))}
 
         {/*LOGOUT*/}
-        <ListItemButton onClick={handlerLogout}>
-          <Box
-            sx={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <Typography variant="body2" fontWeight="700">
-              ログアウト
-            </Typography>
-            <LogoutOutlined sx={{ ml: 2 }} />
-          </Box>
+        <ListItemButton
+          sx={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+          onClick={handlerLogout}
+        >
+          <Typography variant="body2" fontWeight="700">
+            ログアウト
+          </Typography>
+          <IconButton>
+            <Logout fontSize="small" />
+          </IconButton>
         </ListItemButton>
       </List>
     </Drawer>
