@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Container } from '@mui/material';
-import notionLogo from 'src/assets/images/notion-logo.png';
+import notionLogo from 'src/assets/images/logo.jpg';
 import { Outlet } from 'react-router-dom';
 import { useAuthorization } from 'src/hooks/useAuthorization';
 
