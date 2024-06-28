@@ -26,7 +26,7 @@ export const useSidebar = () => {
     } catch (error: unknown) {
       if (error instanceof AxiosError) alert(error.message);
     }
-  }, [memoId]);
+  }, [allMemoData, dispatch, navigate]);
 
   useEffect(() => {
     // Get all memo data
