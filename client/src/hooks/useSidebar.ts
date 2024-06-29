@@ -29,18 +29,6 @@ export const useSidebar = () => {
   }, [allMemoData, dispatch, navigate]);
 
   useEffect(() => {
-    // Get all memo data
-    (async () => {
-      try {
-        const { data } = await memoApi.getAll();
-        dispatch(setAllMemoData(data));
-      } catch (error: unknown) {
-        if (error instanceof AxiosError) alert(error.message);
-      }
-    })();
-  }, [dispatch]);
-
-  useEffect(() => {
     setSelectedMemoId(memoId ? memoId : null);
   }, [navigate, memoId]);
 

@@ -1,17 +1,5 @@
 import axiosClient from 'src/api/axiosClient';
-
-export type MemoEntity = {
-  __v: number;
-  _id: string;
-  userId: string;
-  title: string;
-  description: string;
-  icon: string;
-  position: number;
-  favoritePosition: number;
-  createdAt: Date;
-  updatedAt: Date;
-};
+import { FavoriteMemoEntity, MemoEntity } from 'src/util/memo.type';
 
 const memoApi = {
   create: (): Promise<{ data: MemoEntity }> => axiosClient.post('/memo'),
@@ -20,6 +8,8 @@ const memoApi = {
   update: (memoId: string, params: MemoEntity): Promise<{ data: MemoEntity }> =>
     axiosClient.put(`/memo/${memoId}`, params),
   delete: (memoId: string): Promise<{ data: MemoEntity }> => axiosClient.delete(`/memo/${memoId}`),
+  updateFavorite: (memoId: string, params: FavoriteMemoEntity): Promise<{ data: MemoEntity }> =>
+    axiosClient.put(`/favorite/${memoId}`, params),
 };
 
 export default memoApi;

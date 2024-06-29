@@ -1,11 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import memoApi, { MemoEntity } from 'src/api/memoApi';
+import memoApi from 'src/api/memoApi';
 import { AxiosError } from 'axios';
 import { debounce } from 'src/util/debounce';
 import { setAllMemoData } from 'src/redux/features/memoSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState, useSelector } from 'src/redux/store';
+import { addFavorite, removeFavorite } from 'src/util/memoListFactory';
+import { MemoEntity } from 'src/util/memo.type';
 
 export type InputFormType = 'title' | 'description';
 
@@ -14,6 +16,7 @@ export const useMemoHook = () => {
   const allMemoData = useSelector((state: RootState) => state.memo.allData);
   const navigate = useNavigate();
   const { memoId } = useParams();
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [memoData, setMemoData] = useState<MemoEntity | null>(null);
 
   // update memo
@@ -80,6 +83,29 @@ export const useMemoHook = () => {
     }
   }, [memoId, allMemoData, dispatch, navigate]);
 
+  // update favorite
+  const updateFavorite = useCallback(() => {
+    if (!memoId || memoData === null) return;
+
+    // update memo data
+    debounce(async () => {
+      try {
+        // update favorite
+        await memoApi.updateFavorite(memoId, { setFavorite: !isFavorite });
+        // update favorite state
+        setIsFavorite(!isFavorite);
+        // update all memo data
+        const updateAllMemoData = !isFavorite
+          ? addFavorite(memoData, allMemoData)
+          : removeFavorite(memoData, allMemoData);
+        // update store
+        dispatch(setAllMemoData(updateAllMemoData));
+      } catch (error: unknown) {
+        if (error instanceof AxiosError) alert(error.message);
+      }
+    }, 200);
+  }, [memoId, memoData, isFavorite, allMemoData, dispatch]);
+
   useEffect(() => {
     // Get memo content
     if (memoId)
@@ -87,14 +113,16 @@ export const useMemoHook = () => {
         try {
           const { data } = await memoApi.get(memoId);
           setMemoData(data);
+          setIsFavorite(0 < data.favoritePosition);
         } catch (error: unknown) {
           if (error instanceof AxiosError) {
             setMemoData(null);
+            setIsFavorite(false);
             alert(error.message);
           }
         }
       })();
   }, [memoId]);
 
-  return { memoData, updateMemo, deleteMemo };
+  return { isFavorite, memoData, updateMemo, deleteMemo, updateFavorite };
 };

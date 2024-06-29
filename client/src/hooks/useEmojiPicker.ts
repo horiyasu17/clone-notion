@@ -1,9 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState, useSelector } from 'src/redux/store';
 import { useEffect, useState } from 'react';
-import memoApi, { MemoEntity } from 'src/api/memoApi';
+import memoApi from 'src/api/memoApi';
 import { setAllMemoData } from 'src/redux/features/memoSlice';
 import { AxiosError } from 'axios';
+import { MemoEntity } from 'src/util/memo.type';
 
 type EmojiType = {
   id: string;

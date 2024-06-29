@@ -14,13 +14,12 @@ import { useCommon } from 'src/hooks/useCommon';
 import { RootState, useSelector } from 'src/redux/store';
 import { Link } from 'react-router-dom';
 import { useSidebar } from 'src/hooks/useSidebar';
-import { MemoEntity } from 'src/api/memoApi';
+import { MemoEntity } from 'src/util/memo.type';
 
 export const Sidebar = () => {
   const { selectedMemoId, createMemo } = useSidebar();
-  const { handlerLogout } = useCommon();
+  const { allMemos, allFavorites, handlerLogout } = useCommon();
   const userData = useSelector((state: RootState) => state.user.data);
-  const allMemoData = useSelector((state: RootState) => state.memo.allData);
 
   return (
     <Drawer
@@ -49,6 +48,23 @@ export const Sidebar = () => {
             お気に入り
           </Typography>
         </ListItem>
+
+        <Box sx={{ pl: '15px' }}>
+          {/*FAVORITE MEMO TITLE*/}
+          {0 < allFavorites.length &&
+            allFavorites.map((memo: MemoEntity) => (
+              <ListItemButton
+                component={Link}
+                to={`/memo/${memo._id}`}
+                key={memo._id}
+                selected={memo._id === selectedMemoId}
+              >
+                <Box>
+                  <Typography>{`${memo.icon} ${memo.title}`}</Typography>
+                </Box>
+              </ListItemButton>
+            ))}
+        </Box>
 
         {/*Memo*/}
         <ListItem
@@ -79,8 +95,8 @@ export const Sidebar = () => {
           </ListItemButton>
 
           {/*MEMO TITLE*/}
-          {0 < allMemoData.length &&
-            allMemoData.map((memo: MemoEntity) => (
+          {0 < allMemos.length &&
+            allMemos.map((memo: MemoEntity) => (
               <ListItemButton
                 component={Link}
                 to={`/memo/${memo._id}`}

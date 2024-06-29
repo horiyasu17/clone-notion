@@ -1,11 +1,11 @@
 import { Box, IconButton, TextField } from '@mui/material';
-import { DeleteOutline, StarBorderOutlined } from '@mui/icons-material';
+import { DeleteOutline, Star, StarBorderOutlined } from '@mui/icons-material';
 import { useMemoHook } from 'src/hooks/useMemo';
 import { styles } from 'src/assets/css/memoStyles';
 import { EmojiPicker } from 'src/components/common/EmojiPicker';
 
 export const Memo = () => {
-  const { memoData, updateMemo, deleteMemo } = useMemoHook();
+  const { isFavorite, memoData, updateMemo, deleteMemo, updateFavorite } = useMemoHook();
 
   return (
     <>
@@ -16,8 +16,8 @@ export const Memo = () => {
           width: '100%',
         }}
       >
-        <IconButton>
-          <StarBorderOutlined />
+        <IconButton onClick={updateFavorite}>
+          {isFavorite ? <Star /> : <StarBorderOutlined />}
         </IconButton>
         <IconButton color="error" onClick={deleteMemo}>
           <DeleteOutline />

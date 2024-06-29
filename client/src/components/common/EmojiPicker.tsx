@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { MemoEntity } from 'src/api/memoApi';
 import Picker from '@emoji-mart/react';
 import { useEmojiPicker } from 'src/hooks/useEmojiPicker';
+import { MemoEntity } from 'src/util/memo.type';
 
 type EmojiPickerProps = {
   memoData: MemoEntity | null;

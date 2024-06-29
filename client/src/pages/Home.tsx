@@ -1,11 +1,11 @@
 import { Box, Button, Grid, List, ListItemButton, Typography } from '@mui/material';
 import { useCommon } from 'src/hooks/useCommon';
 import { RootState, useSelector } from 'src/redux/store';
-import { MemoEntity } from 'src/api/memoApi';
 import dayjs from 'dayjs';
 import ja from 'dayjs/locale/ja';
 import { AccessTime } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { MemoEntity } from 'src/util/memo.type';
 
 //localization
 dayjs.locale(ja);
