@@ -9,7 +9,7 @@ import { AppDispatch, RootState, useSelector } from 'src/redux/store';
 
 export type InputFormType = 'title' | 'description';
 
-export const useMemo = () => {
+export const useMemoHook = () => {
   const dispatch = useDispatch<AppDispatch>();
   const allMemoData = useSelector((state: RootState) => state.memo.allData);
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export const useMemo = () => {
         }
       });
     },
-    [memoId],
+    [memoId, allMemoData, dispatch],
   );
 
   // delete memo
@@ -78,7 +78,7 @@ export const useMemo = () => {
     } catch (error: unknown) {
       if (error instanceof AxiosError) alert(error.message);
     }
-  }, [memoId]);
+  }, [memoId, allMemoData, dispatch, navigate]);
 
   useEffect(() => {
     // Get memo content

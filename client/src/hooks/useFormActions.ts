@@ -1,8 +1,9 @@
 import { FormEvent, useState } from 'react';
-import AuthApi, { LoginUserType, RegisterUserType } from 'src/api/AuthApi';
+import AuthApi from 'src/api/AuthApi';
 import { AxiosError } from 'axios';
-import { ErrorResponse } from 'src/types/responseError';
+import { ErrorResponse } from 'src/types/responseError.type';
 import { useNavigate } from 'react-router-dom';
+import { LoginUserType, RegisterUserType } from 'src/types/auth.type';
 
 const useFormActions = () => {
   const navigate = useNavigate();

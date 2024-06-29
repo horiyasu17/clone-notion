@@ -1,11 +1,11 @@
 import { Box, IconButton, TextField } from '@mui/material';
 import { DeleteOutline, StarBorderOutlined } from '@mui/icons-material';
-import { useMemo } from 'src/hooks/useMemo';
+import { useMemoHook } from 'src/hooks/useMemo';
 import { styles } from 'src/assets/css/memoStyles';
 import { EmojiPicker } from 'src/components/common/EmojiPicker';
 
 export const Memo = () => {
-  const { memoData, updateMemo, deleteMemo } = useMemo();
+  const { memoData, updateMemo, deleteMemo } = useMemoHook();
 
   return (
     <>

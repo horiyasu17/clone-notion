@@ -34,5 +34,5 @@ export const useAuthorization = () => {
         }
       }
     })();
-  }, [navigate, dispatch, isAuthenticatedView]);
+  }, [navigate, dispatch, isAuthenticatedView, handlerLogout]);
 };

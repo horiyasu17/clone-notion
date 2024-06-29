@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserEntity } from 'src/api/AuthApi';
+import { UserEntity } from 'src/types/auth.type';
 
 export const userSlice = createSlice({
   name: 'user',
