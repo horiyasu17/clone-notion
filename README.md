@@ -19,6 +19,8 @@
 学習サンプルとして題材されていたNotionクローンアプリケーションに、独自にTypescriptを加えました。  
 また、一部オリジナルから仕様を変更しユーザビリティの向上しています。  
 
+<img width="1010" alt="screen_login" src="https://github.com/horiyasu17/clone-notion/assets/7429161/ad302968-0ea8-4ccf-b50e-e26df1c9b760">
+
 ## ディレクトリ構成
 
 ```shell
