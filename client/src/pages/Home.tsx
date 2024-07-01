@@ -1,18 +1,14 @@
-import { Box, Button, Grid, List, ListItemButton, Typography } from '@mui/material';
+import { Box, Button, List, Typography } from '@mui/material';
 import { useCommon } from 'src/hooks/useCommon';
-import { RootState, useSelector } from 'src/redux/store';
 import dayjs from 'dayjs';
 import ja from 'dayjs/locale/ja';
-import { AccessTime } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import { MemoEntity } from 'src/util/memo.type';
+import { ListButtons } from 'src/components/common/ListButtons';
 
 //localization
 dayjs.locale(ja);
 
 export const Home = () => {
-  const { createMemo } = useCommon();
-  const allMemoData = useSelector((state: RootState) => state.memo.allData);
+  const { allMemos, allFavorites, allMemoData, createMemo } = useCommon();
 
   return (
     <>
@@ -34,37 +30,24 @@ export const Home = () => {
         </Box>
       )}
 
+      {/*Favorite memo list*/}
+      {allFavorites.length > 0 && (
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="h5" sx={{ fontWeight: 'bold' }} children={'お気に入り'} />
+          <List>
+            <ListButtons memoList={allFavorites} />
+          </List>
+        </Box>
+      )}
+
       {/*Memo list*/}
-      {allMemoData.length > 0 && (
-        <List>
-          {allMemoData.map((memo: MemoEntity, index: number) => (
-            <ListItemButton
-              key={index}
-              component={Link}
-              to={`/memo/${memo._id}`}
-              sx={{
-                borderTop: index === 0 ? '1px solid #bbb' : 'none',
-                borderBottom: '1px solid #bbb',
-                py: '10px',
-              }}
-            >
-              <Grid container direction="row" justifyContent="space-between" alignItems="center">
-                <Grid item xs={12} md={8}>
-                  <Typography children={`${memo.icon} ${memo.title}`} />
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={4}
-                  sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
-                >
-                  <AccessTime fontSize="small" sx={{ mr: 1 }} />
-                  <Typography children={dayjs(memo.updatedAt).format('YYYY/MM/DD HH:mm:ss')} />
-                </Grid>
-              </Grid>
-            </ListItemButton>
-          ))}
-        </List>
+      {allMemos.length > 0 && (
+        <Box>
+          <Typography variant="h5" sx={{ fontWeight: 'bold' }} children={'メモ'} />
+          <List>
+            <ListButtons memoList={allMemos} />
+          </List>
+        </Box>
       )}
     </>
   );

@@ -46,5 +46,5 @@ export const useCommon = () => {
     );
   }, [allMemoData]);
 
-  return { allMemos, allFavorites, createMemo, handlerLogout };
+  return { allMemos, allFavorites, allMemoData, createMemo, handlerLogout };
 };
