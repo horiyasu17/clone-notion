@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { Home, AddBoxOutlined, Logout } from '@mui/icons-material';
+import { Home, Star, BorderColor, AddBoxOutlined, Logout } from '@mui/icons-material';
 import assets from 'src/assets';
 import { useCommon } from 'src/hooks/useCommon';
 import { RootState, useSelector } from 'src/redux/store';
@@ -42,14 +42,14 @@ export const Sidebar = () => {
         {/*FAVORITE*/}
         <ListItem sx={{ mt: 2 }}>
           <ListItemIcon sx={{ minWidth: '30px' }}>
-            <Home fontSize="small" />
+            <Star fontSize="small" />
           </ListItemIcon>
           <Typography variant="body2" fontWeight="700">
             お気に入り
           </Typography>
         </ListItem>
 
-        <Box sx={{ pl: '15px' }}>
+        <Box sx={{ pl: '30px' }}>
           {/*FAVORITE MEMO TITLE*/}
           {0 < allFavorites.length &&
             allFavorites.map((memo: MemoEntity) => (
@@ -59,9 +59,7 @@ export const Sidebar = () => {
                 key={memo._id}
                 selected={memo._id === selectedMemoId}
               >
-                <Box>
-                  <Typography>{`${memo.icon} ${memo.title}`}</Typography>
-                </Box>
+                <Typography>{`${memo.icon} ${memo.title}`}</Typography>
               </ListItemButton>
             ))}
         </Box>
@@ -77,7 +75,7 @@ export const Sidebar = () => {
         >
           <Stack direction="row">
             <ListItemIcon sx={{ minWidth: '30px' }}>
-              <Home fontSize="small" />
+              <BorderColor fontSize="small" />
             </ListItemIcon>
             <Typography variant="body2" fontWeight="700">
               メモ
@@ -85,7 +83,7 @@ export const Sidebar = () => {
           </Stack>
         </ListItem>
 
-        <Box sx={{ pl: '15px' }}>
+        <Box sx={{ pl: '30px' }}>
           {/*NEW CREATE*/}
           <ListItemButton onClick={createMemo}>
             <ListItemIcon sx={{ minWidth: 'auto', mr: '2px' }}>
@@ -103,9 +101,7 @@ export const Sidebar = () => {
                 key={memo._id}
                 selected={memo._id === selectedMemoId}
               >
-                <Box>
-                  <Typography>{`${memo.icon} ${memo.title}`}</Typography>
-                </Box>
+                <Typography>{`${memo.icon} ${memo.title}`}</Typography>
               </ListItemButton>
             ))}
         </Box>
