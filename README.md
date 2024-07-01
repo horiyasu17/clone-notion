@@ -2,17 +2,8 @@
 
 ## 使用技術
 
-<img src="https://img.shields.io/badge/-React-61DAFB.svg?logo=react&style=plastic">
-<img src="https://img.shields.io/badge/-Redux-764ABC.svg?logo=redux&style=plastic">
-<img src="https://img.shields.io/badge/-Typescript-007ACC.svg?logo=typescript&style=plastic">
-<img src="https://img.shields.io/badge/-Node.js-339933.svg?logo=node.js&style=plastic">
-<img src="https://img.shields.io/badge/-Nodemon-76D04B.svg?logo=nodemon&style=plastic">
-<img src="https://img.shields.io/badge/-Prettier-F7B93E.svg?logo=prettier&style=plastic">
-<img src="https://img.shields.io/badge/-Axios-5a2ae4.svg?logo=Axios&style=plastic">
-<img src="https://img.shields.io/badge/-Express-010409.svg?logo=Express&style=plastic">
-<img src="https://img.shields.io/badge/-Day.js-ff5e4c.svg?logo=Day.js&style=plastic">
-<img src="https://img.shields.io/badge/-MONGOOSE-880001.svg?logo=MONGOOSE&style=plastic">
-<img src="https://img.shields.io/badge/-MUI-007fff.svg?logo=MUI&style=plastic">
+<img src="https://img.shields.io/badge/-React-61DAFB.svg?logo=react&style=plastic"> <img src="https://img.shields.io/badge/-Redux-764ABC.svg?logo=redux&style=plastic"> <img src="https://img.shields.io/badge/-Typescript-007ACC.svg?logo=typescript&style=plastic"> <img src="https://img.shields.io/badge/-Node.js-339933.svg?logo=node.js&style=plastic"> <img src="https://img.shields.io/badge/-Nodemon-76D04B.svg?logo=nodemon&style=plastic"> <img src="https://img.shields.io/badge/-Prettier-F7B93E.svg?logo=prettier&style=plastic"> <img src="https://img.shields.io/badge/-Axios-5a2ae4.svg?logo=Axios&style=plastic"> <img src="https://img.shields.io/badge/-Express-010409.svg?logo=Express&style=plastic"> <img src="https://img.shields.io/badge/-Day.js-ff5e4c.svg?logo=Day.js&style=plastic"> <img src="https://img.shields.io/badge/-MONGOOSE-880001.svg?logo=MONGOOSE&style=plastic"> <img src="https://img.shields.io/badge/-MUI-007fff.svg?logo=MUI&style=plastic">
+
 
 ## 概要
 
