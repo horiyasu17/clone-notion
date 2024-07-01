@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MemoEntity } from 'src/api/memoApi';
+import { MemoEntity } from 'src/util/memo.type';
 
 export const memoSlice = createSlice({
   name: 'memo',
